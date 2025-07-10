@@ -1,4 +1,5 @@
-const API_BASE_URL = "https://queueease-byredox.onrender.com/api"
+const API_BASE_URL = import.meta.env.VITE_APP_DB_SERVER ||"http://localhost:5000/api" || "https://queueease-byredox.onrender.com/api"
+
 
 class ApiService {
   async request(endpoint, options = {}) {
@@ -25,7 +26,7 @@ class ApiService {
     }
   }
 
-
+  // Queue Management
   async getQueue() {
     return this.request("/queue")
   }
@@ -50,7 +51,7 @@ class ApiService {
     })
   }
 
-
+  // Admin
   async adminLogin(credentials) {
     return this.request("/admin/login", {
       method: "POST",
@@ -58,6 +59,7 @@ class ApiService {
     })
   }
 
+  // Feedback
   async submitFeedback(feedbackData) {
     return this.request("/feedback", {
       method: "POST",
@@ -69,7 +71,7 @@ class ApiService {
     return this.request("/feedback")
   }
 
-
+  // Stats
   async getStats() {
     return this.request("/stats")
   }
