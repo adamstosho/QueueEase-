@@ -13,16 +13,17 @@ const statsRoutes = require('./routes/statsRoutes');
 
 const app = express();
 
-app.get('/', (req, res) => {
-  res.send('Hello from Express on Vercel!');
-});
+// app.get('/', (req, res) => {
+//   res.send('Hello from Express on Vercel!');
+// });
 
 
 app.use(express.json());
 
 app.use(
   cors({
-    origin: ["http://localhost:3001", "http://localhost:3000", "http://localhost:5173", "https://queueease-chi.vercel.app"],
+    // origin: ["http://localhost:3001", "http://localhost:3000", "http://localhost:5173", "https://queueease-chi.vercel.app"],
+    origin: ["https://queueease-chi.vercel.app", "http://localhost:3000"],
     credential: true
 }));
 

@@ -7,8 +7,9 @@
   },
   "servers": [
     {
-      "url": "https://queue-ease-five.vercel.app",
-      "description": "Local development server"
+      
+      "url": "http://localhost:5000/api",
+      "description": "Development server"
     }
   ],
   "paths": {
