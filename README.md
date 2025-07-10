@@ -1,9 +1,6 @@
 # QueueEase
-
 QueueEase is a digital queue management system designed to streamline and modernize the process of managing queues in local Nigerian communities. In many public and private institutions across Nigeria, long and disorganized queues are a common challenge, leading to wasted time, frustration, and inefficiency. QueueEase addresses this by providing a simple, accessible platform for both administrators and users to manage, join, and monitor queues in real-time.
-
-## Problem Statement
-In Nigeria, queues are a daily reality in banks, hospitals, government offices, and other service centers. Traditional manual queueing often results in:
+In Nigeria and some other countries, queues are a daily reality in banks, hospitals, government offices, and other service centers. Traditional manual queueing often results in:
 - Long wait times
 - Lack of transparency
 - Queue jumping and disputes
@@ -21,7 +18,7 @@ QueueEase aims to solve these issues by digitizing the queue process, making it 
 ## Tech Stack
 - **Frontend:** React, Tailwind CSS, Vite
 - **Backend:** Node.js, Express
-- **Database:** (Add your DB, e.g., MongoDB)
+- **Database:** (MongoDB)
 
 ## Getting Started
 
@@ -32,7 +29,7 @@ QueueEase aims to solve these issues by digitizing the queue process, making it 
 ### Setup
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/QueueEase.git
+   git clone https://github.com/adamstosho/QueueEase-.git
    cd QueueEase
    ```
 2. Install dependencies for both frontend and backend:

@@ -8,7 +8,7 @@
   "servers": [
     {
       
-      "url": "http://localhost:5000/api",
+      "url": "https://queueease-byredox.onrender.com",
       "description": "Development server"
     }
   ],

@@ -22,7 +22,6 @@ app.use(express.json());
 
 app.use(
   cors({
-    // origin: ["http://localhost:3001", "http://localhost:3000", "http://localhost:5173", "https://queueease-chi.vercel.app"],
     origin: ["https://queueease-chi.vercel.app", "http://localhost:3000"],
     credential: true
 }));
