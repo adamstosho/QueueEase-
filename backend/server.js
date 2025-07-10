@@ -17,7 +17,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: ["https://queue-ease-ueaf.vercel.app/", "http://localhost:3000"],
+    origin: ["https://queue-ease-ueaf.vercel.app", "http://localhost:3000"],
     credential: true
 }));
 
