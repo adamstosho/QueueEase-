@@ -87,6 +87,8 @@ Here is the preview of the  flow of the application (QueueEase)
 **Kindly assess the api-documentation here: -** 
 https://queueease-byredox.onrender.com/api-docs
 
+---
+
 
 ## Usage
 - Access the frontend at `http://localhost:5173` (default Vite port)
