@@ -1,0 +1,598 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "QueueEase Backend API",
+    "description": "API documentation for the QueueEase backend built with MERN stack, providing endpoints for queue management, feedback collection, admin authentication, and statistics.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/api",
+      "description": "Local development server"
+    }
+  ],
+  "paths": {
+    "/admin/login": {
+      "post": {
+        "summary": "Admin login",
+        "description": "Authenticates an admin user and returns a JWT token.",
+        "tags": ["Admin"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["username", "password"],
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "description": "Admin username",
+                    "example": "admin"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Admin password",
+                    "example": "password123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful login with JWT token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "description": "JWT token for admin authentication",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid credentials"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/feedback": {
+      "post": {
+        "summary": "Submit feedback",
+        "description": "Submits user feedback with name, rating, and optional comment. Stores in MongoDB or in-memory storage if DB connection fails.",
+        "tags": ["Feedback"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "rating"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the user providing feedback",
+                    "example": "John Doe"
+                  },
+                  "rating": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 5,
+                    "description": "Rating from 1 to 5",
+                    "example": 5
+                  },
+                  "comment": {
+                    "type": "string",
+                    "description": "Optional feedback comment",
+                    "example": "Great service!"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Feedback submitted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Feedback"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (missing name/rating or invalid rating)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Name and rating are required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all feedback",
+        "description": "Retrieves all feedback entries, sorted by creation date (newest first).",
+        "tags": ["Feedback"],
+        "responses": {
+          "200": {
+            "description": "List of feedback entries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Feedback"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/queue": {
+      "post": {
+        "summary": "Add user to queue",
+        "description": "Adds a user to the queue with name, phone, and optional remarks. Stores in MongoDB or in-memory storage if DB connection fails.",
+        "tags": ["Queue"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "phone"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the user",
+                    "example": "Jane Smith"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "description": "Phone number of the user",
+                    "example": "+1234567890"
+                  },
+                  "remarks": {
+                    "type": "string",
+                    "description": "Optional remarks",
+                    "example": "Needs urgent attention"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User added to queue successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Queue"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (missing name or phone)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Name and phone are required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get queue",
+        "description": "Retrieves all queue entries, sorted by join time (earliest first).",
+        "tags": ["Queue"],
+        "responses": {
+          "200": {
+            "description": "List of queue entries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Queue"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/queue/{id}": {
+      "patch": {
+        "summary": "Update queue status",
+        "description": "Updates the status of a queue entry by ID.",
+        "tags": ["Queue"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the queue entry",
+            "schema": {
+              "type": "string",
+              "example": "1234567890"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["status"],
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": ["waiting", "served", "skipped"],
+                    "description": "New status for the queue entry",
+                    "example": "served"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Queue entry updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Queue"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid status."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Queue entry not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "User not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete queue entry",
+        "description": "Removes a queue entry by ID.",
+        "tags": ["Queue"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the queue entry",
+            "schema": {
+              "type": "string",
+              "example": "1234567890"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Queue entry deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Queue"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Queue entry not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "User not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stats": {
+      "get": {
+        "summary": "Get queue statistics",
+        "description": "Retrieves statistics on queue statuses (served, skipped, waiting).",
+        "tags": ["Stats"],
+        "responses": {
+          "200": {
+            "description": "Queue statistics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "served": {
+                      "type": "integer",
+                      "description": "Number of served queue entries",
+                      "example": 10
+                    },
+                    "skipped": {
+                      "type": "integer",
+                      "description": "Number of skipped queue entries",
+                      "example": 5
+                    },
+                    "waiting": {
+                      "type": "integer",
+                      "description": "Number of waiting queue entries",
+                      "example": 15
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Feedback": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Unique identifier for the feedback",
+            "example": "1234567890"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the user",
+            "example": "John Doe"
+          },
+          "rating": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5,
+            "description": "Rating from 1 to 5",
+            "example": 5
+          },
+          "comment": {
+            "type": "string",
+            "description": "Optional feedback comment",
+            "example": "Great service!"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp of feedback creation",
+            "example": "2025-07-10T13:39:00Z"
+          }
+        }
+      },
+      "Queue": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Unique identifier for the queue entry",
+            "example": "1234567890"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the user",
+            "example": "Jane Smith"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Phone number of the user",
+            "example": "+1234567890"
+          },
+          "remarks": {
+            "type": "string",
+            "description": "Optional remarks",
+            "example": "Needs urgent attention"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["waiting", "served", "skipped"],
+            "description": "Status of the queue entry",
+            "example": "waiting"
+          },
+          "joinTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp when the user joined the queue",
+            "example": "2025-07-10T13:39:00Z"
+          }
+        }
+      }
+    }
+  }
+}
