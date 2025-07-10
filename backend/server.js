@@ -1,5 +1,3 @@
-// server.js
-// Main entry point for QueueEase backend
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -17,8 +15,8 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: ["https://queue-ease-ueaf.vercel.app", "http://localhost:3000"],
-    credential: true
+    origin: "https://queue-ease-ueaf.vercel.app",
+    credentials: true,
 }));
 
 
