@@ -6,7 +6,14 @@ In Nigeria and some other countries, queues are a daily reality in banks, hospit
 - Queue jumping and disputes
 - Poor user experience
 
-QueueEase aims to solve these issues by digitizing the queue process, making it fairer, more transparent, and efficient for everyone involved.
+QueueEase aims to solve these issues by digitizing the queue process, making it fairer, more **transparent**, and efficient for everyone involved.
+
+## **Quick Testing: -**
+https://queue-ease-ueaf.vercel.app/
+NOTE: Admin login details for testing {
+   username: omotosho
+   password: omotosho123
+}
 
 ## Features
 - Real-time queue updates
@@ -14,6 +21,13 @@ QueueEase aims to solve these issues by digitizing the queue process, making it 
 - Admin dashboard for managing queues and viewing statistics
 - Feedback system for continuous improvement
 - Secure authentication and role-based access
+
+## **Quick Testing: -**
+https://queue-ease-ueaf.vercel.app/
+NOTE: Admin login details for testing {
+   username: omotosho
+   password: omotosho123
+}
 
 ## Tech Stack
 - **Frontend:** React, Tailwind CSS, Vite
@@ -48,6 +62,31 @@ QueueEase aims to solve these issues by digitizing the queue process, making it 
    cd frontend
    npm run dev
    ```
+
+   ## **Quick Testing: -**
+https://queue-ease-ueaf.vercel.app/
+NOTE: Admin login details for testing {
+   username: omotosho
+   password: omotosho123
+}
+
+## **Preview**
+Here is the preview of the  flow of the application (QueueEase)
+
+![screenshot](/frontend/public/Screenshot%20(36).png)
+![screenshot](/frontend/public/Screenshot%20(37).png)
+![screenshot](/frontend/public/Screenshot%20(38).png)
+![screenshot](/frontend/public/Screenshot%20(39).png)
+![screenshot](/frontend/public/Screenshot%20(40).png)
+![screenshot](/frontend/public/Screenshot%20(41).png)
+![screenshot](/frontend/public/Screenshot%20(42).png)
+![screenshot](/frontend/public/Screenshot%20(43).png)
+![screenshot](/frontend/public/Screenshot%20(44).png)
+
+
+**Kindly assess the api-documentation here: -** 
+https://queueease-byredox.onrender.com/api-docs
+
 
 ## Usage
 - Access the frontend at `http://localhost:5173` (default Vite port)
