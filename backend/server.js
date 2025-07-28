@@ -19,9 +19,7 @@ const app = express();
 
 connectDB();
 
-app.get("/", (req, res) => {
-  res.send("API is working");
-});
+
 
 app.use(express.json());
 
@@ -33,6 +31,10 @@ app.use(
 );
 
 app.use(helmet());
+
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "Welcome to the API" });
+});
 
 // Swagger UI route
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
