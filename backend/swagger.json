@@ -8,7 +8,7 @@
   "servers": [
     {
       
-      "url": "https://queueease-byredox.onrender.com",
+      "url": "https://queue-ease-8roy.vercel.app/api",
       "description": "Development server"
     }
   ],

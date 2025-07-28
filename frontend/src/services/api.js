@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://queueease-byredox.onrender.com/api" || import.meta.env.VITE_APP_DB_SERVER ||"http://localhost:5000/api"
+const API_BASE_URL = "https://queue-ease-8roy.vercel.app/api" || import.meta.env.VITE_APP_DB_SERVER ||"http://localhost:5000/api"
 
 
 class ApiService {

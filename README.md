@@ -85,7 +85,7 @@ Here is the preview of the  flow of the application (QueueEase)
 
 
 **Kindly assess the api-documentation here: -** 
-https://queueease-byredox.onrender.com/api-docs
+https://queue-ease-8roy.vercel.app/api-docs
 
 ---
 
